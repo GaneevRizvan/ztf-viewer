@@ -16,6 +16,7 @@ import json
 import math
 from astropy.coordinates import SkyCoord
 from astropy.table import QTable
+from astropy.units import Quantity
 from dash import ALL, MATCH, Input, Output, State, dcc, html
 from dash.dash_table import DataTable
 from dash.exceptions import PreventUpdate
@@ -1415,7 +1416,7 @@ def get_summary(oid, dr, different_filter, different_field, radius_ids, radius_v
         for table_field, display_name in SUMMARY_FIELDS.items():
             try:
                 value = row[table_field]
-                if not value:
+                if not isinstance(value, np.ndarray) and not isinstance(value, Quantity) and not value:
                     continue
                 if table_field == "__distance" and table["__distance"].unit is not None:
                     value = value * table["__distance"].unit

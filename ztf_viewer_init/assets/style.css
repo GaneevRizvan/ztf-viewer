@@ -1,0 +1,148 @@
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.inline {
+  display: inline;
+}
+
+.attention {
+    font-size: large;
+}
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+  color: #22114C;
+  text-decoration: underline;
+  cursor: pointer;}
+a:hover {
+  color: #FCBD43; }
+
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  color: #22114C;
+  border: 1px solid #22114C;
+}
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #FCBD43;
+  border-color: #22114C;
+}
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #22114C;
+  border-color: #22114C;
+}
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FCBD43;
+  background-color: #22114C;
+  border-color: #22114C;
+}
+
+
+/* Forms
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #22114C;
+}
+
+#header-logo {
+    height: 1.7320508076em;  /* sqrt(3) */
+    width: auto;
+    top: 0.4910254038em;  /* (sqrt(3) - 1) / 2 + 0.125 */
+    position: relative;
+}
+
+
+/* Slider
+--------------------------------------------------- */
+.rc-slider-handle,
+.rc-slider-dot-active,
+.rc-slider-track {
+    border: solid 2px #FCBD43;
+}
+
+.rc-slider-handle:focus,
+.rc-slider-handle:hover,
+.rc-slider-handle:active,
+.rc-slider-handle-click-focused,
+.rc-slider-handle-click-focused:focus,
+.rc-slider-handle.rc-slider-handle-click-focused,
+.rc-slider-handle.rc-slider-handle-click-focused:active,
+.rc-slider-handle.rc-slider-handle-click-focused:focus,
+.rc-slider-handle.rc-slider-handle-click-focused:focus {
+    border: 2px solid #22114C;
+}
+
+
+/*
+ Make superscript and subscript to be one bellow other
+ https://stackoverflow.com/a/58628296/5437597
+
+Example:
+
+<div class="expression">
+1.23
+<span class='supsub'>
+  <sup class='superscript'>+0.12</sup>
+  <sub class='subscript'>-0.07</sub>
+</span>
+</div>
+ */
+.expression {
+    display: flex;
+    align-items: center;
+}
+.supsub {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2px;
+    align-items: center;
+}
+.subscript {
+    display:flex;
+}
+.superscript {
+    display:flex;
+}

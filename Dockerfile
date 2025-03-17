@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 FROM python:3.12-bookworm
+=======
+FROM mirror.gcr.io/python:3.10-bullseye
+>>>>>>> d166a14 (Try to fit light curve)
 
 # Timezone settings
 ENV TZ=Europe/Moscow

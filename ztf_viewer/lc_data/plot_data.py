@@ -33,7 +33,6 @@ def plot_data(
             continue
 
         obs["mark_size"] = mark_size
-
         # Normally we have a single oid for the light curve, but it could not
         # be a case, see get_antares_lc for an example
         ref_flux = 10 ** (-0.4 * (ref_mag[obs["oid"]] - ABZPMAG_JY))

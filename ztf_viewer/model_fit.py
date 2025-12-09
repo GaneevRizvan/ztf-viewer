@@ -12,36 +12,20 @@ def post_request(url, data):
         response = requests.post(url, json=data.model_dump())
         response.raise_for_status()
         return response.status_code, response.json()
-    except requests.exceptions.HTTPError as e:
-        print(f"HTTP error occurred: {e}")
-        return e.response.status_code, None
-    except requests.exceptions.ConnectionError as e:
-        print(f"Connection error: {e}")
-        return 0, None
-    except requests.exceptions.Timeout as e:
-        print(f"Timeout error: {e}")
-        return -1, None
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-        return -2, None
+    except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout, requests.exceptions.RequestException) as e:
+        print(f"A model-fit-api error occurred: {e}")
+        return -1, {"error": "API is unavailable"}
 
 def get_request(url):
     try:
         response = requests.get(url)
         response.raise_for_status()
         return response.status_code, response.json()
-    except requests.exceptions.HTTPError as e:
-        print(f"HTTP error occurred: {e}")
-        return e.response.status_code, None
-    except requests.exceptions.ConnectionError as e:
-        print(f"Connection error: {e}")
-        return 0, None
-    except requests.exceptions.Timeout as e:
-        print(f"Timeout error: {e}")
-        return -1, None
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-        return -2, None
+    except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout, requests.exceptions.RequestException) as e:
+        print(f"A model-fit-api error occurred: {e}")
+        return -1,{"error": "API is unavailable"}
 
 class Observation(BaseModel):
     mjd: float
@@ -100,7 +84,7 @@ class ModelFit:
                 ]
             except (NotFound, CatalogUnavailable):
                 print(f"Catalog error")
-                return {}
+                return {'error': 'Catalog is unavailable'}
         status_code, res_fit = post_request(
             self.base_url + self.path,
             Target(
@@ -122,10 +106,12 @@ class ModelFit:
         if status_code == 200:
             return res_fit["parameters"]
         else:
-            return {}
+            return res_fit
 
     def get_curve(self, df, dr, bright, params, name_model):
         self.set_path("/sncosmo/get_curve")
+        if 'error' in params.keys():
+            return pd.DataFrame.from_records([])
         band_ref = {}
         band_list = ["ztf" + str(band[1:]) for band in df["filter"].unique()]
         mjd_min = df["mjd"].min()
@@ -145,7 +131,7 @@ class ModelFit:
 
         for band in df["filter"].unique():
             band_ref[band] = df[df["filter"] == band]["ref_flux"].mean().astype(float)
-        status_code, res_fit = post_request(
+        status_code, res_curve = post_request(
             self.base_url + self.path,
             ModelData(
                 parameters=params,
@@ -158,7 +144,7 @@ class ModelFit:
             ),
         )
         if status_code == 200:
-            df_fit = pd.DataFrame.from_records(res_fit["bright"])
+            df_fit = pd.DataFrame.from_records(res_curve["bright"])
             df_fit["time"] = df_fit["time"] - 58000
             return df_fit
         else:

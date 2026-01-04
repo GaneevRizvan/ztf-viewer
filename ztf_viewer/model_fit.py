@@ -88,7 +88,6 @@ class ModelFit:
                 try:
                     ref = ztf_ref.get(objectid, dr)
                 except (NotFound, CatalogUnavailable):
-                    print("Catalog error")
                     return {"error": "ZTF Reference catalog is unavailable"}
                 ref_mag = ref["mag"] + ref["magzp"]
                 ref_magerr = ref["sigmag"]
